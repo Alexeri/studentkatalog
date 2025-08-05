@@ -1,0 +1,27 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+body {
+  font-family: Arial, sans-serif;
+}
+main {
+  margin: 1rem;
+}
+
+.student-table {
+  margin-top: 1rem;
+  border-collapse: collapse;
+}
+.student-table th,
+.student-table td {
+  width: 5rem;
+  text-align: left;
+}
+.student-table thead {
+  border-bottom: 1px solid #ccc;
+}
+
+.student-table tbody tr:first-child td {
+  padding-top: 0.25rem;
+}
