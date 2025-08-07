@@ -1,4 +1,6 @@
-interface Student {
+// --- Interfaces --- //
+export interface Student {
+  id: number;
   name: string;
   age: number;
   isActive: boolean;
@@ -51,3 +53,32 @@ function renderStudents(students: Student[]) {
 }
 // --- Initial Render --- //
 renderStudents(students);
+
+const studentForm = document.getElementById("new-student-form") as HTMLFormElement;
+const nameInput = document.getElementById("name-input") as HTMLInputElement;
+const ageInput = document.getElementById("age-input") as HTMLInputElement;
+
+const addStudent = (event: Event): void => {
+    event?.preventDefault();
+
+    const name = nameInput.value;
+    const age = parseInt(ageInput.value);
+
+
+    const newStudent: Student = {
+        name: name,
+        age: age,
+        isActive: false,
+    }
+
+    students.push(newStudent);
+
+    nameInput.value = "";
+    ageInput.value = "";
+
+    nameInput.focus();
+
+    renderStudents(students);
+}
+
+studentForm.addEventListener("submit", addStudent);
