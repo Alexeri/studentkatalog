@@ -1,13 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <script src="/dist/main.js" defer></script>
-    <link rel="stylesheet" href="/css/style.css">
-</head>
-<body>
+    <script src="/dist/main.js" type="module" defer></script>
+    <!-- <script src="/dist/addStudent.js" type="module" defer></script> -->
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Studentkatalog</h1>
+      <table class="student-table">
+        <thead>
+          <tr>
+            <th>Namn</th>
+            <th>Ålder</th>
+          </tr>
+        </thead>
+        <tbody id="student-tbody"></tbody>
+      </table>
 
-</body>
+      <h2>Lägg till en ny dröm</h2>
+      <form id="new-student-form">
+        <label for="name-input"> Student:</label>
+        <input type="text" id="name-input" placeholder="Namn..." required />
+        <label for="age-input"> Ålder:</label>
+        <input type="number" id="age-input" placeholder="Ålder..." required />
+        <button type="submit">Lägg till</button>
+      </form>
+    </main>
+  </body>
 </html>
