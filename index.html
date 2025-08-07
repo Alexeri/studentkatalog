@@ -1,13 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="/dist/main.js" defer></script>
-    <link rel="stylesheet" href="/css/style.css">
-</head>
-<body>
-
-</body>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Studentkatalog</h1>
+    </header>
+    <main>
+      <section>
+        <h2>Studentlista</h2>
+        <table class="student-table">
+          <thead>
+            <tr>
+              <th>Namn</th>
+              <th>Ålder</th>
+              <th>Aktiv</th>
+            </tr>
+          </thead>
+          <tbody id="student-tbody"></tbody>
+        </table>
+      </section>
+      <section class="add-student">
+        <h2>Lägg till en ny student</h2>
+        <form class="add-student-form" id="new-student-form">
+          <div>
+            <label for="name-input"> Student:</label>
+            <input type="text" id="name-input" placeholder="Namn..." required />
+          </div>
+          <div>
+            <label for="age-input"> Ålder:</label>
+            <input
+              type="number"
+              id="age-input"
+              placeholder="Ålder..."
+              required
+            />
+          </div>
+          <button type="submit">Lägg till</button>
+        </form>
+      </section>
+    </main>
+  </body>
 </html>
