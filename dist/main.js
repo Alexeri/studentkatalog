@@ -1,9 +1,9 @@
 "use strict";
 // --- Data --- //
 const students = [
-    { id: 1, name: "Alice", age: 20 },
-    { id: 2, name: "Bob", age: 21 },
-    { id: 3, name: "Charlie", age: 22 },
+    { name: "Alice", age: 20, isActive: true },
+    { name: "Bob", age: 21, isActive: false },
+    { name: "Charlie", age: 22, isActive: true },
 ];
 // --- Dom Elements --- //
 const studentList = getElement("#student-tbody");
@@ -17,13 +17,27 @@ function getElement(selector) {
 // --- Render Functions --- //
 function renderStudents(students) {
     studentList.innerHTML = students
-        .map((student) => `
+        .map((student, i) => `
         <tr class="student-row">
           <td class="student-name">${student.name}</td>
           <td class="student-age">${student.age}</td>
+          <td>
+             <input type="checkbox" class="checkbox" data-index="${i}" ${student.isActive ? "checked" : ""}>
+             <span>${student.isActive ? "Aktiv" : "Inaktiv"}</span>
+          </td>
         </tr>
       `)
         .join("");
+  
+    const checkboxes = studentList.querySelectorAll<HTMLInputElement>(".checkbox");
+    checkboxes.forEach((checkbox) => {
+      checkbox.addEventListener("change", (event) => {
+        const target = event.target;
+        const id = Number(target.dataset.index);
+        students[id].isActive = target.checked;
+        renderStudents(students);
+      }
+    })
 }
 // --- Initial Render --- //
 renderStudents(students);
