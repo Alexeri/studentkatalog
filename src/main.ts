@@ -1,6 +1,5 @@
 // --- Interfaces --- //
-export interface Student {
-  id: number;
+interface Student {
   name: string;
   age: number;
   isActive: boolean;
