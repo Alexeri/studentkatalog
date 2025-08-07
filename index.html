@@ -1,14 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="/dist/main.js" defer></script>
-    <link rel="stylesheet" href="/css/style.css">
-</head>
-<body>
-    <h1>Studentlista</h1>
-    <div id="student-list"></div>
-</body>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Studentkatalog</h1>
+      <table class="student-table">
+        <thead>
+          <tr>
+            <th>Namn</th>
+            <th>Ålder</th>
+            <th>Aktiv</th>
+          </tr>
+        </thead>
+        <tbody id="student-tbody"></tbody>
+      </table>
+    </main>
+  </body>
 </html>
+

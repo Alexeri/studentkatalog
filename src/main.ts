@@ -1,53 +1,41 @@
-interface Student {
-  name: string
-  isActive: boolean
+const students = [
+    { name: "Alice", age: 20, isActive: true },
+    { name: "Bob", age: 21, isActive: false },
+    { name: "Charlie", age: 22, isActive: true },
+];
+// --- Dom Elements --- //
+const studentList = getElement("#student-tbody");
+// --- Utility Functions --- //
+function getElement(selector) {
+    const el = document.querySelector(selector);
+    if (!el)
+        throw new Error(`Element with selector "${selector}" not found.`);
+    return el;
 }
-const students: Student[] = [
-  { name: "Alice", isActive: true },
-  { name: "Bob", isActive: false },
-  { name: "Charlie", isActive: true },
-]
-
-const studentListDiv = document.getElementById("student-list") as HTMLDivElement
-
-function renderStudents(): void {
-    studentListDiv.innerHTML = ""
-    const studentList = document.createElement("ul")
-
-    // Utgår från den hårdkodade listan av studenter, eftersom detta usercase inte täcker upp addering eller borttagning av studenter 
-    students.forEach(student => {
-        const listItem = document.createElement("li")
-        
-        // Visa studentens namn
-        listItem.classList.add("student-item")
-        const nameSpan = document.createElement("span")
-        nameSpan.textContent = student.name + ", "
-        listItem.appendChild(nameSpan)
-
-        // Visa studentens status
-        const statusSpan = document.createElement("span")
-        if (student.isActive)
-            statusSpan.textContent = "Aktiv"
-        else
-            statusSpan.textContent = "Inaktiv"
-        listItem.appendChild(statusSpan)
-
-        // Lägg till checkbox-elementet
-        const statusCheckbox = document.createElement("input")
-        statusCheckbox.type = "checkbox"
-        statusCheckbox.checked = student.isActive
-
-        statusCheckbox.addEventListener("change", () => {
-          student.isActive = !student.isActive
-          renderStudents()
-        })
-        
-        listItem.appendChild(statusCheckbox)
-
-        studentList.appendChild(listItem)
+// --- Render Functions --- //
+function renderStudents(students) {
+    studentList.innerHTML = students
+        .map((student, i) => `
+        <tr class="student-row">
+          <td class="student-name">${student.name}</td>
+          <td class="student-age">${student.age}</td>
+          <td>
+             <input type="checkbox" class="checkbox" data-index="${i}" ${student.isActive ? "checked" : ""}>
+             <span>${student.isActive ? "Aktiv" : "Inaktiv"}</span>
+          </td>
+        </tr>
+      `)
+        .join("");
+  
+    const checkboxes = studentList.querySelectorAll<HTMLInputElement>(".checkbox");
+    checkboxes.forEach((checkbox) => {
+      checkbox.addEventListener("change", (event) => {
+        const target = event.target;
+        const id = Number(target.dataset.index);
+        students[id].isActive = target.checked;
+        renderStudents(students);
+      }
     })
-
-    studentListDiv.appendChild(studentList)
 }
-
-renderStudents()
+// --- Initial Render --- //
+renderStudents(students);
