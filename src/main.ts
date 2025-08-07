@@ -5,34 +5,38 @@ interface Student {
   isActive: boolean;
 }
 
+// --- Data --- //
 const students = [
   { name: "Alice", age: 20, isActive: true },
   { name: "Bob", age: 21, isActive: false },
   { name: "Charlie", age: 22, isActive: true },
 ];
+
 // --- Dom Elements --- //
-const studentList = getElement("#student-tbody");
+const studentList = getElement<HTMLTableSectionElement>("#student-tbody");
+const studentForm = getElement<HTMLFormElement>("#new-student-form");
+const nameInput = getElement<HTMLInputElement>("#name-input");
+const ageInput = getElement<HTMLInputElement>("#age-input");
+
 // --- Utility Functions --- //
 function getElement<T extends HTMLElement>(selector: string): T {
   const el = document.querySelector<T>(selector);
-  if (!el) {
-    throw new Error(`Element with selector "${selector}" not found.`);
-  }
+  if (!el) throw new Error(`Element with selector "${selector}" not found.`);
   return el;
 }
 // --- Render Functions --- //
 function renderStudents(students: Student[]) {
   studentList.innerHTML = students
     .map(
-      (student, i) => `
+      ({ name, age, isActive }, i) => `
       <tr class="student-row">
-        <td class="student-name">${student.name}</td>
-        <td class="student-age">${student.age}</td>
+        <td class="student-name">${name}</td>
+        <td class="student-age">${age}</td>
         <td>
           <input type="checkbox" class="checkbox" data-index="${i}" ${
-        student.isActive ? "checked" : ""
+        isActive ? "checked" : ""
       }>
-          <span>${student.isActive ? "Aktiv" : "Inaktiv"}</span>
+          <span>${isActive ? "Aktiv" : "Inaktiv"}</span>
         </td>
       </tr>
     `
@@ -50,34 +54,25 @@ function renderStudents(students: Student[]) {
     });
   });
 }
-// --- Initial Render --- //
-renderStudents(students);
 
-const studentForm = document.getElementById("new-student-form") as HTMLFormElement;
-const nameInput = document.getElementById("name-input") as HTMLInputElement;
-const ageInput = document.getElementById("age-input") as HTMLInputElement;
+// --- Event handlers --- //
+function handleAddStudent(event: Event): void {
+  event.preventDefault();
+  const name = nameInput.value.trim();
+  const age = parseInt(ageInput.value);
 
-const addStudent = (event: Event): void => {
-    event?.preventDefault();
+  if (!name || isNaN(age)) return;
 
-    const name = nameInput.value;
-    const age = parseInt(ageInput.value);
+  students.push({ name, age, isActive: false });
 
+  nameInput.value = "";
+  ageInput.value = "";
 
-    const newStudent: Student = {
-        name: name,
-        age: age,
-        isActive: false,
-    }
+  nameInput.focus();
 
-    students.push(newStudent);
-
-    nameInput.value = "";
-    ageInput.value = "";
-
-    nameInput.focus();
-
-    renderStudents(students);
+  renderStudents(students);
 }
 
-studentForm.addEventListener("submit", addStudent);
+// --- Init --- //
+renderStudents(students);
+studentForm.addEventListener("submit", handleAddStudent);

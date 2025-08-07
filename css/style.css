@@ -7,6 +7,13 @@ body {
 }
 main {
   margin: 1rem;
+  display: flex;
+  gap: 4rem;
+}
+
+header{
+  background-color: #eee;
+  padding: 1rem;
 }
 
 .student-table {
@@ -24,4 +31,22 @@ main {
 
 .student-table tbody tr:first-child td {
   padding-top: 0.25rem;
+}
+.add-student {
+  input {
+    width: 100%;
+  }
+}
+.add-student-form {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  width: 12rem;
+  gap: 1rem;
+  label{
+    font-weight: 600;
+  }
+  input{
+    margin-top: 0.125rem;
+  }
 }
