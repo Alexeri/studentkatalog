@@ -1,7 +1,6 @@
 {
   "name": "ts-boilerplate",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,6 +17,7 @@
   },
   "homepage": "https://github.com/Lexicon-frontend-2025/ts-boilerplate#readme",
   "devDependencies": {
-    "typescript": "^5.8.3"
-  }
+    "typescript": "^5.9.2"
+  },
+  "description": ""
 }

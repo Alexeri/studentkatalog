@@ -3,40 +3,54 @@ export interface Student {
   id: number;
   name: string;
   age: number;
-  // isActive: boolean;
+  isActive: boolean;
 }
 
-// --- Data --- //
-export const students: Student[] = [
-  { id: 1, name: "Alice", age: 20},
-  { id: 2, name: "Bob", age: 21 },
-  { id: 3, name: "Charlie", age: 22 },
+const students = [
+  { name: "Alice", age: 20, isActive: true },
+  { name: "Bob", age: 21, isActive: false },
+  { name: "Charlie", age: 22, isActive: true },
 ];
-
 // --- Dom Elements --- //
-const studentList = getElement<HTMLTableSectionElement>("#student-tbody");
-
+const studentList = getElement("#student-tbody");
 // --- Utility Functions --- //
 function getElement<T extends HTMLElement>(selector: string): T {
-  const el = document.querySelector(selector);
-  if (!el) throw new Error(`Element with selector "${selector}" not found.`);
-  return el as T;
+  const el = document.querySelector<T>(selector);
+  if (!el) {
+    throw new Error(`Element with selector "${selector}" not found.`);
+  }
+  return el;
 }
-
 // --- Render Functions --- //
-export function renderStudents(students: Student[]): void {
+function renderStudents(students: Student[]) {
   studentList.innerHTML = students
     .map(
-      (student) => `
-        <tr class="student-row">
-          <td class="student-name">${student.name}</td>
-          <td class="student-age">${student.age}</td>
-        </tr>
-      `
+      (student, i) => `
+      <tr class="student-row">
+        <td class="student-name">${student.name}</td>
+        <td class="student-age">${student.age}</td>
+        <td>
+          <input type="checkbox" class="checkbox" data-index="${i}" ${
+        student.isActive ? "checked" : ""
+      }>
+          <span>${student.isActive ? "Aktiv" : "Inaktiv"}</span>
+        </td>
+      </tr>
+    `
     )
     .join("");
-}
 
+  const checkboxes =
+    studentList.querySelectorAll<HTMLInputElement>(".checkbox");
+  checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener("change", (event: Event) => {
+      const target = event.target as HTMLInputElement;
+      const id = Number(target.dataset.index);
+      students[id].isActive = target.checked;
+      renderStudents(students);
+    });
+  });
+}
 // --- Initial Render --- //
 renderStudents(students);
 
@@ -50,19 +64,11 @@ const addStudent = (event: Event): void => {
     const name = nameInput.value;
     const age = parseInt(ageInput.value);
 
-    let newId: number;
-
-    if (students.length > 0) {
-        newId = Math.max(...students.map((student: Student) => student.id)) + 1;
-    } else {
-        newId = 1;
-    }
 
     const newStudent: Student = {
-        id: newId,
         name: name,
         age: age,
-        // isActive: false,
+        isActive: false,
     }
 
     students.push(newStudent);
