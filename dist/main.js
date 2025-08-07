@@ -47,6 +47,9 @@ const addStudent = (event) => {
         // isActive: false,
     };
     students.push(newStudent);
+    nameInput.value = "";
+    ageInput.value = "";
+    nameInput.focus();
     renderStudents(students);
 };
 studentForm.addEventListener("submit", addStudent);

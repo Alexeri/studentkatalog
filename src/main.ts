@@ -67,6 +67,11 @@ const addStudent = (event: Event): void => {
 
     students.push(newStudent);
 
+    nameInput.value = "";
+    ageInput.value = "";
+
+    nameInput.focus();
+
     renderStudents(students);
 }
 
